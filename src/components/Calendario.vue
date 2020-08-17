@@ -1,5 +1,24 @@
 <template>
   <v-container>
+    <v-row>
+      <v-col>
+        <v-sheet height="64">
+          <v-toolbar flat color="white">
+            <v-btn fab color="withe" @click="anterior">
+              <v-icon small>mdi-chevron-left</v-icon>
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-toolbar-title v-if="$refs.calendarActual">
+              {{ $refs.calendarActual.title }}
+            </v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn fab color="withe" @click="siguiente">
+              <v-icon small>mdi-chevron-right</v-icon>
+            </v-btn>
+          </v-toolbar>
+        </v-sheet>
+      </v-col>
+    </v-row>
     <v-row class="text-center">
       <v-col>
         <v-sheet height="64">
@@ -55,23 +74,36 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "Calendario",
   data: () => ({
-    mesAnterior: "",
-    mesActual: "",
-    mesSiguiente: "",
+    mesAnterior: null,
+    mesActual: null,
+    mesSiguiente: null,
   }),
+  methods: {
+    anterior() {
+      this.mesAnterior = this.restaMes(new Date(this.mesAnterior));
+      this.mesActual = this.restaMes(new Date(this.mesActual));
+      this.mesSiguiente = this.restaMes(new Date(this.mesSiguiente));
+    },
+    siguiente() {
+      this.mesAnterior = this.agregaMes(new Date(this.mesAnterior));
+      this.mesActual = this.agregaMes(new Date(this.mesActual));
+      this.mesSiguiente = this.agregaMes(new Date(this.mesSiguiente));
+    },
+    agregaMes(fecha) {
+      fecha.setMonth(fecha.getMonth() + 1);
+      return fecha;
+    },
+    restaMes(fecha) {
+      fecha.setMonth(fecha.getMonth() - 1);
+      return fecha;
+    },
+  },
   mounted() {
-    let mesAnt = new Date();
-    mesAnt.setMonth(mesAnt.getMonth() - 1);
-    this.mesAnterior = mesAnt;
-
-    let mesAct = new Date();
-    this.mesActual = mesAct;
-
-    let mesSig = new Date();
-    mesSig.setMonth(mesSig.getMonth() + 1);
-    this.mesSiguiente = mesSig;
-  }
+    this.mesAnterior = this.restaMes(new Date());
+    this.mesActual = new Date();
+    this.mesSiguiente = this.agregaMes(new Date());
+  },
 };
 </script>

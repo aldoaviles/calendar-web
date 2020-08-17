@@ -8,19 +8,19 @@
       <span class="mr-2">Versión 1.0</span>
     </v-app-bar>
     <v-main>
-      <HelloWorld />
+      <Calendario />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
+import Calendario from "./components/Calendario";
 
 export default {
   name: "App",
 
   components: {
-    HelloWorld,
+    Calendario
   },
 
   data: () => ({
